@@ -3,7 +3,6 @@
 namespace IvaoBrasil\Infrastructure;
 
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Str;
 use IvaoBrasil\Infrastructure\Auth\Data\AuthProviders;
 use IvaoBrasil\Infrastructure\Auth\Services\IvaoLegacyProvider;
 use IvaoBrasil\Infrastructure\Auth\Services\IvaoOauthSocialiteService;
@@ -53,19 +52,12 @@ class InfrastructureServiceProvider extends PackageServiceProvider
             function (Application $app) {
                 $config = config('ivao-infrastructure.auth.legacy');
 
-                $config = config('');
-                $redirect = Str::startsWith($config["redirect"], '/')
-                    ? $this->app->make('url')->to($config["redirect"])
-                    : $config["redirect"];
-                $loginUrl = array_key_exists("ivao-dev-login-url", $config) ? $config["ivao-dev-login-url"] : null;
-                $apiUrl = array_key_exists("ivao-dev-login-api", $config) ? $config["ivao-dev-login-api"] : null;
-
                 return new IvaoLegacyProvider(
                     $app->make(Request::class),
                     $app->make(LegacyHttpClient::class),
-                    $redirect,
-                    $loginUrl,
-                    $apiUrl
+                    $config['redirect'],
+                    $config['login_url'],
+                    $config['api_url']
                 );
             }
         );

@@ -2,21 +2,21 @@
 
 namespace IvaoBrasil\Infrastructure\Auth\Services;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Laravel\Socialite\Contracts\Provider as ProviderContract;
 use Laravel\Socialite\One\User;
 
 class IvaoLegacyProvider implements ProviderContract
 {
-    private const IVAO_LOGIN_REDIRECT_URL = 'https://login.ivao.aero/index.php';
-
     public function __construct(
         private Request $request,
         private LegacyHttpClient $httpClient,
-        private ?string $redirectUrl = self::IVAO_LOGIN_REDIRECT_URL,
-        private ?string $loginUrl,
-        private ?string $apiUrl
+        private string $redirectUrl,
+        private string $loginUrl,
+        private string $apiUrl
     ) {
     }
 
@@ -27,7 +27,11 @@ class IvaoLegacyProvider implements ProviderContract
      */
     public function redirect(): RedirectResponse
     {
-        return new RedirectResponse($this->loginUrl . '?url=' . $this->redirectUrl);
+        $redirectUrl = Str::startsWith($this->redirectUrl, '/')
+                    ? App::make('url')->to($this->redirectUrl)
+                    : $this->redirectUrl;
+
+        return new RedirectResponse($this->loginUrl . '?url=' . $redirectUrl);
     }
 
     /**

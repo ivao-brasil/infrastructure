@@ -3,9 +3,8 @@
 namespace IvaoBrasil\Infrastructure;
 
 use Illuminate\Contracts\Foundation\Application;
-use IvaoBrasil\Infrastructure\Auth\Data\AuthProviders;
 use IvaoBrasil\Infrastructure\Auth\Services\IvaoLegacyProvider;
-use IvaoBrasil\Infrastructure\Auth\Services\IvaoOauthSocialiteService;
+use IvaoBrasil\Infrastructure\Auth\Services\IvaoOauthProvider;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -29,26 +28,21 @@ class InfrastructureServiceProvider extends PackageServiceProvider
 
     public function packageBooted()
     {
-        if (!config('user.oauth.enabled', false)) {
-            return;
-        }
-
         /** @var \Laravel\Socialite\SocialiteManager */
         $socialite = $this->app->make(\Laravel\Socialite\Contracts\Factory::class);
         $socialite->extend(
-            AuthProviders::IVAO_OAUTH->value,
+            'ivao-oauth',
             function () use ($socialite) {
                 $config = config('ivao-infrastructure.auth.oauth');
-
                 return $socialite->buildProvider(
-                    IvaoOauthSocialiteService::class,
+                    IvaoOauthProvider::class,
                     $config
                 );
             }
         );
 
         $socialite->extend(
-            AuthProviders::IVAO_LEGACY->value,
+            'ivao-legacy',
             function (Application $app) {
                 $config = config('ivao-infrastructure.auth.legacy');
 

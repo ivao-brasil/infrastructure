@@ -8,7 +8,7 @@ use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
 
-class IvaoOauthSocialiteService extends AbstractProvider implements ProviderInterface
+class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @var string[]

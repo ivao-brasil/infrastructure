@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use IvaoBrasil\Infrastructure\Auth\Exception\InvalidUserDataException;
 use Laravel\Socialite\Contracts\Provider as ProviderContract;
 use Laravel\Socialite\One\User;
 
@@ -44,7 +45,7 @@ class IvaoLegacyProvider implements ProviderContract
         $token = $this->extractTokenFromUrl();
         $rawUserData = $this->httpClient->getUserFromToken($token, $this->apiUrl);
         if (!$rawUserData) {
-            return null;
+            throw new InvalidUserDataException();
         }
 
         return (new User())->setRaw($rawUserData)->map([

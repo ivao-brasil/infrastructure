@@ -5,8 +5,11 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Test">
-            <directory suffix="Test.php">./tests</directory>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
@@ -17,5 +20,7 @@
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
+        <env name="DB_CONNECTION" value="testing"/>
+        <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
     </php>
 </phpunit>

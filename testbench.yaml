@@ -1,0 +1,16 @@
+providers:
+   - IvaoBrasil\Infrastructure\InfrastructureServiceProvider
+   - Laravel\Socialite\SocialiteServiceProvider
+
+migrations:
+  - workbench/database/migrations
+
+seeders: []
+
+workbench:
+  start: '/'
+  install: true
+  welcome: true
+  build: []
+  assets: []
+  sync: []

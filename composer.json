@@ -1,0 +1,45 @@
+{
+    "name": "ivao-brasil/infrastructure",
+    "description": "IVAO Brasil infrastructure for backend",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "IVAO Brasil",
+            "email": "br-web@ivao.aero"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0",
+        "laravel/socialite": "^5.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6",
+        "fakerphp/faker": "^1.23",
+        "spatie/laravel-package-tools": "^1.16"
+    },
+    "autoload": {
+        "classmap": [
+            "migrations/"
+        ],
+        "psr-4": {
+            "IvaoBrasil\\Infrastructure\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IvaoBrasil\\Infrastructure\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "IvaoBrasil\\InfrastructureServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "php vendor/bin/phpunit"
+    }
+}

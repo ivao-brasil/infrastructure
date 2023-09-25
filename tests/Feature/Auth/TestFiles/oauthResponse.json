@@ -1,0 +1,51 @@
+{
+    "id": 444590,
+    "centerId": "SBCW",
+    "countryId": "BR",
+    "createdAt": "2013-10-29T23:03:00.000Z",
+    "divisionId": "BR",
+    "isStaff": true,
+    "languageId": "pt",
+    "firstName": "Joelson",
+    "lastName": "Santana",
+    "rating": {
+        "isPilot": true,
+        "isAtc": true,
+        "pilotRating": {
+            "id": 7,
+            "name": "Commercial Pilot",
+            "shortName": "CP",
+            "description": "Rating requires at least 200 hours online as a pilot<br>and a successful theoretical and practical test"
+        },
+        "atcRating": {
+            "id": 7,
+            "name": "Center Controller",
+            "shortName": "ACC",
+            "description": "Rating requires at least 200 hours online as a controller<br>and a successful theoretical and practical test"
+        }
+    },
+    "hours": [
+        {
+            "type": "atc",
+            "hours": 1488285
+        },
+        {
+            "type": "pilot",
+            "hours": 2330527
+        },
+        {
+            "type": "staff",
+            "hours": 180777
+        }
+    ],
+    "userStaffPositions": [
+        {
+            "id": "BR-AWM",
+            "staffPositionId": "-AWM",
+            "divisionId": "BR",
+            "onTrial": true,
+            "description": null
+        }
+    ],
+    "publicNickname": "Joelson (444590)"
+}

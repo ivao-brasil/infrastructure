@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 
+/**
+ * IvaoBrasil\Infrastructure\Models\SupportAward\ReportRemark
+ *
+ * @property-read User|null $author
+ * @method static \Illuminate\Database\Eloquent\Builder|ReportRemark newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ReportRemark newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ReportRemark query()
+ * @mixin \Eloquent
+ */
 class ReportRemark extends Model
 {
     protected $fillable = [

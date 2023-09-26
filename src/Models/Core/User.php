@@ -13,6 +13,17 @@ use IvaoBrasil\Infrastructure\Factories\Core\UserFactory;
 use JetBrains\PhpStorm\Deprecated;
 use LogicException;
 
+/**
+ * IvaoBrasil\Infrastructure\Models\Core\User
+ *
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @method static \IvaoBrasil\Infrastructure\Factories\Core\UserFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;

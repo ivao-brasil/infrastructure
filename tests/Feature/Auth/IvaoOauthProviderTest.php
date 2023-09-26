@@ -7,7 +7,6 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Response as FacadesResponse;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -18,7 +17,6 @@ use Orchestra\Testbench\TestCase;
 class IvaoOauthProviderTest extends TestCase
 {
     use WithWorkbench;
-    use RefreshDatabase;
 
     private const GUZZLE_HANDLER_CONFIG = 'ivao-infrastructure.auth.oauth.guzzle.handler';
     private string $openIdConfig = '';

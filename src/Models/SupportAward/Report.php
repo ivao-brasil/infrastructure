@@ -13,6 +13,19 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
 use IvaoBrasil\Infrastructure\Models\TrainingSchedule\TrainingSession;
 use JetBrains\PhpStorm\Deprecated;
 
+/**
+ * IvaoBrasil\Infrastructure\Models\SupportAward\Report
+ *
+ * @property-read User|null $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \IvaoBrasil\Infrastructure\Models\SupportAward\ReportRemark> $remarks
+ * @property-read int|null $remarks_count
+ * @property-read TrainingSession|null $session
+ * @method static \IvaoBrasil\Infrastructure\Factories\SupportAward\ReportFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Report newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Report newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Report query()
+ * @mixin \Eloquent
+ */
 class Report extends Model
 {
     use HasFactory;

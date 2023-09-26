@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 
+/**
+ * IvaoBrasil\Infrastructure\Models\Ais\AisAirport
+ *
+ * @property-read User|null $updatedBy
+ * @method static \Illuminate\Database\Eloquent\Builder|AisAirport newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AisAirport newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AisAirport query()
+ * @mixin \Eloquent
+ */
 class AisAirport extends Model
 {
     protected $visible = [

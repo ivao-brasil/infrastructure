@@ -9,6 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use IvaoBrasil\Infrastructure\Factories\Academy\TagFactory;
 
+/**
+ * IvaoBrasil\Infrastructure\Models\Academy\Tag
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \IvaoBrasil\Infrastructure\Models\Academy\Category> $categories
+ * @property-read int|null $categories_count
+ * @method static \IvaoBrasil\Infrastructure\Factories\Academy\TagFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag query()
+ * @mixin \Eloquent
+ */
 class Tag extends Model
 {
     use HasFactory;

@@ -7,6 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use IvaoBrasil\Infrastructure\Factories\Academy\ManualFactory;
 
+/**
+ * IvaoBrasil\Infrastructure\Models\Academy\Manual
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \IvaoBrasil\Infrastructure\Models\Academy\Category> $categories
+ * @property-read int|null $categories_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \IvaoBrasil\Infrastructure\Models\Academy\Tag> $tags
+ * @property-read int|null $tags_count
+ * @method static \IvaoBrasil\Infrastructure\Factories\Academy\ManualFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual query()
+ * @mixin \Eloquent
+ */
 class Manual extends Model
 {
     use HasFactory;

@@ -9,6 +9,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use IvaoBrasil\Infrastructure\Factories\TrainingSchedule\TrainingSessionFactory;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 
+/**
+ * IvaoBrasil\Infrastructure\Models\TrainingSchedule\TrainingSession
+ *
+ * @property-read User|null $member
+ * @property-read User|null $owner
+ * @method static \IvaoBrasil\Infrastructure\Factories\TrainingSchedule\TrainingSessionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession query()
+ * @mixin \Eloquent
+ */
 class TrainingSession extends Model
 {
     use HasFactory;

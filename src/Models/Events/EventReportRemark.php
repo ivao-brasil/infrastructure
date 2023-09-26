@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 
+/**
+ * IvaoBrasil\Infrastructure\Models\Events\EventReportRemark
+ *
+ * @property-read User|null $owner
+ * @property-read EventReportRemark|null $report
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark query()
+ * @mixin \Eloquent
+ */
 class EventReportRemark extends Model
 {
     protected $table = 'events_reports_remarks';

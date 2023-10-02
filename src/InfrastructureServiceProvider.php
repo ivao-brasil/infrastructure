@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use IvaoBrasil\Infrastructure\Auth\Services\IvaoLegacyProvider;
 use IvaoBrasil\Infrastructure\Auth\Services\IvaoOauthProvider;
 use IvaoBrasil\Infrastructure\Auth\Services\LegacyHttpClient;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -62,9 +64,21 @@ class InfrastructureServiceProvider extends PackageServiceProvider
 
     private function getMigrationNames(): array
     {
-        $mainPath = __DIR__ . '/../migrations/';
-        $directories = glob($mainPath . '/*', GLOB_ONLYDIR);
-        $paths = array_merge([$mainPath], $directories);
-        return array_map(fn (string $path) => basename($path), $paths);
+        $migrationsDir = __DIR__ . '/../database/migrations/';
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($migrationsDir)
+        );
+
+        $migrations = [];
+        foreach ($files as $file) {
+            /** @var \SplFileInfo $file */
+            if ($file->isDir()) {
+                continue;
+            }
+
+            $migrations[] = str_replace($migrationsDir, '', $file->getPathname());
+        }
+
+        return $migrations;
     }
 }

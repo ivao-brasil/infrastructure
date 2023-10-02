@@ -22,9 +22,6 @@
         "barryvdh/laravel-ide-helper": "^2.13"
     },
     "autoload": {
-        "classmap": [
-            "migrations/"
-        ],
         "psr-4": {
             "IvaoBrasil\\Infrastructure\\": "src/"
         }

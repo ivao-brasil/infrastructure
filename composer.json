@@ -40,7 +40,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "IvaoBrasil\\InfrastructureServiceProvider"
+                "IvaoBrasil\\Infrastructure\\InfrastructureServiceProvider"
             ]
         }
     },

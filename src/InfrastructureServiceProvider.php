@@ -3,8 +3,10 @@
 namespace IvaoBrasil\Infrastructure;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
 use IvaoBrasil\Infrastructure\Auth\Services\IvaoLegacyProvider;
 use IvaoBrasil\Infrastructure\Auth\Services\IvaoOauthProvider;
+use IvaoBrasil\Infrastructure\Auth\Services\LegacyHttpClient;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -23,6 +25,7 @@ class InfrastructureServiceProvider extends PackageServiceProvider
     {
         $package->name('ivao-infrastructure')
             ->hasMigrations($this->getMigrationNames())
+            ->runsMigrations()
             ->hasConfigFile();
     }
 

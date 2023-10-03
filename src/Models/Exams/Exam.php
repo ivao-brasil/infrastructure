@@ -16,6 +16,29 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|Exam newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Exam newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Exam query()
+ * @property int $id
+ * @property int $member_vid
+ * @property int|null $examiner_vid
+ * @property string $rating
+ * @property string $status
+ * @property int|null $score
+ * @property string|null $validator_comments
+ * @property string|null $user_comments
+ * @property \Illuminate\Support\Carbon|null $end_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereArchived($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereExaminerVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereMemberVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereRating($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereScore($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereUserComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Exam whereValidatorComments($value)
  * @mixin \Eloquent
  */
 class Exam extends Model

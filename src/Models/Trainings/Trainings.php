@@ -16,6 +16,26 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|Trainings newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Trainings newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Trainings query()
+ * @property int $id
+ * @property int $member_vid
+ * @property int|null $trainer_vid
+ * @property int|null $training_type_id
+ * @property string $status
+ * @property string|null $internal_comments
+ * @property string|null $user_comments
+ * @property \Illuminate\Support\Carbon|null $end_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereInternalComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereMemberVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereTrainerVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereTrainingTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trainings whereUserComments($value)
  * @mixin \Eloquent
  */
 class Trainings extends Model

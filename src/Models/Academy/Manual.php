@@ -18,6 +18,22 @@ use IvaoBrasil\Infrastructure\Factories\Academy\ManualFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|Manual newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Manual newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Manual query()
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property string $language
+ * @property string $file_path
+ * @property int $is_visible
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual whereFilePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual whereIsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual whereLanguage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Manual whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Manual extends Model

@@ -15,6 +15,20 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward query()
+ * @property int $id
+ * @property int $event_id
+ * @property int $member_vid
+ * @property int $award_id
+ * @property int $granted
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward whereAwardId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward whereEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward whereGranted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward whereMemberVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventRequestAward whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class EventRequestAward extends Model

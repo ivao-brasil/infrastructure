@@ -18,6 +18,22 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|EventReport newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EventReport newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EventReport query()
+ * @property int $id
+ * @property string $connectionType
+ * @property int $event_id
+ * @property string $callsign
+ * @property int $owner_id
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReport whereCallsign($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReport whereConnectionType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReport whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReport whereEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReport whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReport whereOwnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReport whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReport whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class EventReport extends Model

@@ -22,6 +22,26 @@ use LogicException;
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @property int $vid
+ * @property string $firstName
+ * @property string $lastName
+ * @property int $atcRating
+ * @property int $pilotRating
+ * @property string $division
+ * @property string $country
+ * @property array $staff
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAtcRating($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDivision($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePilotRating($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereStaff($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereVid($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable

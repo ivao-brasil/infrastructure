@@ -24,6 +24,22 @@ use JetBrains\PhpStorm\Deprecated;
  * @method static \Illuminate\Database\Eloquent\Builder|Report newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Report newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Report query()
+ * @property int $id
+ * @property string $connectionType
+ * @property string $callsign
+ * @property int $session_id
+ * @property int $owner_vid
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereCallsign($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereConnectionType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereOwnerVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereSessionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Report extends Model

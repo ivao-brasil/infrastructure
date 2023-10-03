@@ -14,6 +14,18 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark query()
+ * @property int $id
+ * @property int $report_id
+ * @property string $remark
+ * @property int $owner_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark whereOwnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark whereRemark($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark whereReportId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EventReportRemark whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class EventReportRemark extends Model

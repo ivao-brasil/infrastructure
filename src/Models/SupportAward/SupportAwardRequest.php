@@ -12,6 +12,20 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest query()
+ * @property int $id
+ * @property int $member_vid
+ * @property string $type
+ * @property string $level
+ * @property int $granted
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest whereGranted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest whereLevel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest whereMemberVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class SupportAwardRequest extends Model

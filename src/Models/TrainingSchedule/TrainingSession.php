@@ -18,6 +18,24 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession query()
+ * @property int $id
+ * @property int $owner_vid
+ * @property string $rating
+ * @property string $type
+ * @property string $occurrenceDate
+ * @property string $local
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $member_vid
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereLocal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereMemberVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereOccurrenceDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereOwnerVid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereRating($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrainingSession whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class TrainingSession extends Model

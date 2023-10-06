@@ -46,7 +46,12 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class Event extends Model
 {
-    protected $table = 'events';
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['created_by'];
 
     public function created_by(): BelongsTo
     {

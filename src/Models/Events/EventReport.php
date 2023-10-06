@@ -38,7 +38,17 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class EventReport extends Model
 {
+    /**
+     * @var string
+     */
     protected $table = 'events_report';
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['owner_id', 'created_at'];
 
     public function remarks(): HasMany
     {

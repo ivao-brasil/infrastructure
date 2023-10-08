@@ -30,7 +30,18 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class EventReportRemark extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'events_reports_remarks';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
     protected $fillable = ['report_id', 'remark', 'owner_id'];
 
     public function report(): HasOne

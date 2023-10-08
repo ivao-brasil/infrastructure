@@ -15,9 +15,9 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|AisAirport query()
  * @property int $id
  * @property string $icao
- * @property mixed|null $rwy_configuration
- * @property mixed|null $rmk
- * @property int $active
+ * @property array|null $rwy_configuration
+ * @property array|null $rmk
+ * @property bool $active
  * @property int $updated_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -33,15 +33,23 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class AisAirport extends Model
 {
-    protected $visible = [
-        "id", "icao", "rwy_configuration", "rmk", "updated_by", "active"
-    ];
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $fillable = [
-        "icao", "rwy_configuration", "rmk", "updated_by", "active"
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'rwy_configuration' => 'array',
+        'rmk' => 'array',
+        'active' => 'boolean'
     ];
-
-    protected $table = "ais_airports";
 
     public function updatedBy(): BelongsTo
     {

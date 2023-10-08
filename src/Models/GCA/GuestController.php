@@ -24,5 +24,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class GuestController extends Model
 {
-    protected $table = 'guest_controllers';
+    // TODO: Add FK to added_by
 }

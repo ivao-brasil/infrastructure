@@ -16,7 +16,7 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @property int $member_vid
  * @property string $type
  * @property string $level
- * @property int $granted
+ * @property bool $granted
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|SupportAwardRequest whereCreatedAt($value)
@@ -30,14 +30,27 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class SupportAwardRequest extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = "support_award_requests";
 
-    protected $fillable = [
-        "member_vid", "type", "level", "granted"
-    ];
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $visible = [
-        "id", "member_vid", "member", "type", "level", "granted", "created_at", "updated_at"
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'granted' => 'boolean',
     ];
 
     public function member(): BelongsTo

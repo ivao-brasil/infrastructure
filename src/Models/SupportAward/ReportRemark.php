@@ -30,13 +30,12 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class ReportRemark extends Model
 {
-    protected $fillable = [
-        "report_id", "author_vid", "contents"
-    ];
-
-    protected $visible = [
-        "id", "report_id", "author_vid", "contents", "created_at", "updated_at"
-    ];
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function author(): BelongsTo
     {

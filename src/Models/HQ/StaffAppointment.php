@@ -16,11 +16,11 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @property int $id
  * @property int $vid
  * @property string $position
- * @property string $appointed_at
+ * @property \Illuminate\Support\Carbon $appointed_at
  * @property string $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $active
+ * @property bool $active
  * @method static \Illuminate\Database\Eloquent\Builder|StaffAppointment whereActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StaffAppointment whereAppointedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StaffAppointment whereCreatedAt($value)
@@ -33,16 +33,25 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class StaffAppointment extends Model
 {
-    protected $visible = ['id', 'vid', 'position', 'appointed_at', 'status', 'active'];
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $fillable = ['vid', 'position', 'status', 'active', 'appointed_at'];
-
-    protected $dates = [
-        'appointed_at'
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'appointed_at' => 'datetime',
+        'active' => 'boolean',
     ];
 
     public function staff(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'vid', 'vid');
     }
 }

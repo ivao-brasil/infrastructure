@@ -22,7 +22,7 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @property int $owner_vid
  * @property string $rating
  * @property string $type
- * @property string $occurrenceDate
+ * @property \Illuminate\Support\Carbon $occurrenceDate
  * @property string $local
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -42,14 +42,20 @@ class TrainingSession extends Model
 {
     use HasFactory;
 
-    protected $visible = [
-        "id", "rating", "type", "occurrenceDate", "local", "owner", "member"
-    ];
-    protected $fillable = [
-        "rating", "type", "occurrenceDate", "local", "owner_vid", "member_vid"
-    ];
-    protected $dates = [
-        'occurrenceDate'
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'occurrenceDate' => 'datetime'
     ];
 
     public function owner(): BelongsTo

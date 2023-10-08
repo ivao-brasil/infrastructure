@@ -32,14 +32,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Consentment extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'discord-consentment';
 
-    protected $fillable = [
-        "userVid",
-        "discordId",
-        "nickName",
-        "roles",
-        "division",
-        "status"
-    ];
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 }

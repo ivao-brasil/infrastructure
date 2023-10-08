@@ -2,8 +2,10 @@
 
 namespace IvaoBrasil\Infrastructure\Models\Exams;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use InvalidArgumentException;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 
 /**
@@ -43,8 +45,13 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class Exam extends Model
 {
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
     protected $casts = [
-        'end_date' => 'datetime:Y-m-d H:00',
+        'end_date' => 'datetime',
     ];
 
     public function examiner(): BelongsTo
@@ -57,18 +64,27 @@ class Exam extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getCanArchiveAttribute(): bool
+    /**
+     * Get the value indicating whether the exam is archived
+     */
+    protected function canArchive(): Attribute
     {
-        $isClosed = $this->status === 'finished' || $this->status === 'cancelled';
-        return $isClosed && !$this->archived;
-    }
+        return Attribute::make(
+            get: function (bool $value, array $attributes) {
+                if ($value) {
+                    return $value;
+                }
 
-    public function setArchivedAttribute(bool $value): void
-    {
-        if (!$this->can_archive && $value) {
-            throw new \InvalidArgumentException('The exam could not be archived');
-        }
+                $isClosed = in_array($attributes['status'], ['finished', 'cancelled']);
+                return $isClosed && !$this->archived;
+            },
+            set: function (bool $value, array $attributes) {
+                if (!$attributes['can_archive'] && $value) {
+                    throw new InvalidArgumentException('The exam could not be archived');
+                }
 
-        $this->attributes['archived'] = $value;
+                return $value;
+            }
+        );
     }
 }

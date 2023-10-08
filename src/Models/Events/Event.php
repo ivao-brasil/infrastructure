@@ -4,6 +4,8 @@ namespace IvaoBrasil\Infrastructure\Models\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use IvaoBrasil\Infrastructure\Models\Core\DivisionAward;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 
 /**
@@ -22,8 +24,8 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @property int $pilot_reports
  * @property int $pilot_award_id
  * @property int $atc_award_id
- * @property string $start_at
- * @property string $end_at
+ * @property \Illuminate\Support\Carbon $start_at
+ * @property \Illuminate\Support\Carbon $end_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $banner
@@ -53,7 +55,27 @@ class Event extends Model
      */
     protected $guarded = ['created_by'];
 
-    public function created_by(): BelongsTo
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
+    ];
+
+    public function pilotAward(): HasOne
+    {
+        return $this->hasOne(DivisionAward::class);
+    }
+
+    public function atcAward(): HasOne
+    {
+        return $this->hasOne(DivisionAward::class);
+    }
+
+    public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

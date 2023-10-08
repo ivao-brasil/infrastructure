@@ -2,16 +2,13 @@
 
 namespace IvaoBrasil\Infrastructure\Models\Core;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\InvalidCastException;
-use Illuminate\Database\Eloquent\MissingAttributeException;
-use Illuminate\Database\LazyLoadingViolationException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use IvaoBrasil\Infrastructure\Factories\Core\UserFactory;
 use JetBrains\PhpStorm\Deprecated;
-use LogicException;
 
 /**
  * IvaoBrasil\Infrastructure\Models\Core\User
@@ -30,6 +27,7 @@ use LogicException;
  * @property string $division
  * @property string $country
  * @property array $staff
+ * @property string $full_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|User whereAtcRating($value)
@@ -48,25 +46,46 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $primaryKey = "vid";
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'vid';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
     public $incrementing = false;
 
-    protected $fillable = [
-        'vid', 'firstName', 'lastName', 'atcRating', 'pilotRating', 'division', 'country', 'staff'
-    ];
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['created_at', 'updated_at'];
 
-    protected $visible = [
-        'vid', 'firstName', 'lastName', 'atcRating', 'pilotRating', 'division', 'country', 'staff'
-    ];
-
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
     protected $casts = [
         'staff' => 'array',
     ];
 
-    #[Deprecated('Use $model->vid')]
-    public function getVid(): string
+    /**
+     * Retrieves the full name from the given attributes.
+     *
+     * @return Attribute
+     */
+    protected function fullName(): Attribute
     {
-        return $this->getAttribute('vid');
+        return Attribute::make(
+            get: fn (?mixed $value, array $attributes) => "{$attributes['firstName']} {$attributes['lastName']}",
+        );
     }
 
     /**

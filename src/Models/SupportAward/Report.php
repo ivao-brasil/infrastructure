@@ -46,13 +46,12 @@ class Report extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        "connectionType", "callsign", "status", "owner_vid", "session_id", "remarks"
-    ];
-
-    protected $visible = [
-        "id", "connectionType", "callsign", "status", "session", "owner", "created_at", "updated_at", "session_id", "remarks"
-    ];
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function session(): BelongsTo
     {
@@ -62,12 +61,6 @@ class Report extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    #[Deprecated('Use $model->owner')]
-    public function getOwner(): User
-    {
-        return $this->getRelation('owner');
     }
 
     public function remarks(): HasMany

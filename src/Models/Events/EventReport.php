@@ -39,6 +39,8 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
 class EventReport extends Model
 {
     /**
+     * The table associated with the model.
+     *
      * @var string
      */
     protected $table = 'events_report';

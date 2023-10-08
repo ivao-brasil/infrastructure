@@ -33,6 +33,11 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  */
 class EventRequestAward extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'events_request_award';
 
     public function member(): HasOne
@@ -42,6 +47,6 @@ class EventRequestAward extends Model
 
     public function award(): HasOne
     {
-        return $this->hasOne(DivisionAward::class, 'id', 'award_id');
+        return $this->hasOne(DivisionAward::class);
     }
 }

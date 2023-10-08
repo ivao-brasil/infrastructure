@@ -1,6 +1,15 @@
 <?php
+
+use IvaoBrasil\Infrastructure\Data\Auth\UserRoles;
+
 return [
     'auth' => [
+        'division_code' => 'BR',
+        'super_admin_roles' => [
+            UserRoles::WEB_COORDINATOR,
+            UserRoles::WEB_ADVISOR,
+            UserRoles::DIRECTOR
+        ],
         'legacy' => [
             'redirect' => '/auth/provider/ivao-legacy/callback',
             'login_url' => 'https://login.ivao.aero/index.php',

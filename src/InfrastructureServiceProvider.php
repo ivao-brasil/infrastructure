@@ -4,9 +4,14 @@ namespace IvaoBrasil\Infrastructure;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
-use IvaoBrasil\Infrastructure\Auth\Services\IvaoLegacyProvider;
-use IvaoBrasil\Infrastructure\Auth\Services\IvaoOauthProvider;
-use IvaoBrasil\Infrastructure\Auth\Services\LegacyHttpClient;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
+use IvaoBrasil\Infrastructure\Services\Auth\IvaoLegacyProvider;
+use IvaoBrasil\Infrastructure\Services\Auth\IvaoOauthProvider;
+use IvaoBrasil\Infrastructure\Services\Auth\LegacyHttpClient;
+use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
+use IvaoBrasil\Infrastructure\Models\Core\User;
+use IvaoBrasil\Infrastructure\Services\Auth\RoleRegistrarService;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Spatie\LaravelPackageTools\Package;
@@ -29,6 +34,13 @@ class InfrastructureServiceProvider extends PackageServiceProvider
             ->hasMigrations($this->getMigrationNames())
             ->runsMigrations()
             ->hasConfigFile();
+    }
+
+    public function registeringPackage()
+    {
+        $this->app->when(RoleRegistrarService::class)
+            ->needs('$divisionCode')
+            ->giveConfig('ivao-infrastructure.auth.division_code');
     }
 
     public function packageBooted()
@@ -60,6 +72,12 @@ class InfrastructureServiceProvider extends PackageServiceProvider
                 );
             }
         );
+
+        Gate::after(function (User $user) {
+            return $user->hasRole(
+                Arr::pluck(config('ivao-infrastructure.auth.super_admin_roles', []), 'value')
+            );
+        });
     }
 
     private function getMigrationNames(): array

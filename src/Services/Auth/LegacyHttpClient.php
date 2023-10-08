@@ -1,5 +1,5 @@
 <?php
-namespace IvaoBrasil\Infrastructure\Auth\Services;
+namespace IvaoBrasil\Infrastructure\Services\Auth;
 
 use Illuminate\Support\Facades\Http;
 use IvaoBrasil\Infrastructure\Auth\Exception\DomainNotAllowedException;

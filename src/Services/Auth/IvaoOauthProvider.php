@@ -1,6 +1,6 @@
 <?php
 
-namespace IvaoBrasil\Infrastructure\Auth\Services;
+namespace IvaoBrasil\Infrastructure\Services\Auth;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Arr;

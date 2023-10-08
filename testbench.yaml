@@ -14,3 +14,7 @@ workbench:
   build: []
   assets: []
   sync: []
+
+purge:
+  files:
+    - migrations/*

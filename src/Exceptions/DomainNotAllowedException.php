@@ -1,6 +1,6 @@
 <?php
 
-namespace IvaoBrasil\Infrastructure\Auth\Exception;
+namespace IvaoBrasil\Infrastructure\Exceptions;
 
 use InvalidArgumentException;
 use Throwable;

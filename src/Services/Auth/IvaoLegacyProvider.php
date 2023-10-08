@@ -1,6 +1,6 @@
 <?php
 
-namespace IvaoBrasil\Infrastructure\Auth\Services;
+namespace IvaoBrasil\Infrastructure\Services\Auth;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;

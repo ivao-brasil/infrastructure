@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use IvaoBrasil\Infrastructure\Data\User\AtcRating;
+use IvaoBrasil\Infrastructure\Data\User\PilotRating;
 use IvaoBrasil\Infrastructure\Factories\Core\UserFactory;
 use JetBrains\PhpStorm\Deprecated;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * IvaoBrasil\Infrastructure\Models\Core\User
@@ -44,7 +47,7 @@ use JetBrains\PhpStorm\Deprecated;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The primary key for the model.
@@ -74,6 +77,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'staff' => 'array',
+        'atcRating' => AtcRating::class,
+        'pilotRating' => PilotRating::class,
     ];
 
     /**

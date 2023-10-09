@@ -2,14 +2,17 @@
 
 namespace IvaoBrasil\Infrastructure;
 
+use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use IvaoBrasil\Infrastructure\Services\Auth\IvaoLegacyProvider;
 use IvaoBrasil\Infrastructure\Services\Auth\IvaoOauthProvider;
 use IvaoBrasil\Infrastructure\Services\Auth\LegacyHttpClient;
 use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
+use IvaoBrasil\Infrastructure\Listeners\Auth\LoginListener;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 use IvaoBrasil\Infrastructure\Services\Auth\RoleRegistrarService;
 use RecursiveDirectoryIterator;
@@ -45,6 +48,8 @@ class InfrastructureServiceProvider extends PackageServiceProvider
         $this->app->when(RoleRegistrarService::class)
             ->needs('$roleMapping')
             ->giveConfig('ivao-infrastructure.auth.role_mapping');
+
+        Event::listen(Login::class, [LoginListener::class, 'handle']);
     }
 
     public function packageBooted()

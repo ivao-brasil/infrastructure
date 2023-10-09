@@ -4,6 +4,8 @@
 namespace IvaoBrasil\Infrastructure\Factories\Core;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use IvaoBrasil\Infrastructure\Data\User\AtcRating;
+use IvaoBrasil\Infrastructure\Data\User\PilotRating;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 
 class UserFactory extends Factory
@@ -26,8 +28,8 @@ class UserFactory extends Factory
             'vid' => $this->faker->numberBetween(100000, 999999),
             'firstName' => $this->faker->firstName,
             'lastName' => $this->faker->lastName,
-            'atcRating' => $this->faker->numberBetween(0, 5),
-            'pilotRating' => $this->faker->numberBetween(0, 5),
+            'atcRating' => $this->faker->randomElement(AtcRating::class),
+            'pilotRating' => $this->faker->randomElement(PilotRating::class),
             'division' => $this->faker->countryCode,
             'country' => $this->faker->countryCode,
             'staff' => []

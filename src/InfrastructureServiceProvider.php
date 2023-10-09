@@ -41,6 +41,10 @@ class InfrastructureServiceProvider extends PackageServiceProvider
         $this->app->when(RoleRegistrarService::class)
             ->needs('$divisionCode')
             ->giveConfig('ivao-infrastructure.auth.division_code');
+
+        $this->app->when(RoleRegistrarService::class)
+            ->needs('$roleMapping')
+            ->giveConfig('ivao-infrastructure.auth.role_mapping');
     }
 
     public function packageBooted()

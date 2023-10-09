@@ -1,6 +1,7 @@
 providers:
    - IvaoBrasil\Infrastructure\InfrastructureServiceProvider
    - Laravel\Socialite\SocialiteServiceProvider
+   - Spatie\Permission\PermissionServiceProvider
 
 migrations:
   - workbench/database/migrations
@@ -9,12 +10,8 @@ seeders: []
 
 workbench:
   start: '/'
-  install: true
+  install: false
   welcome: true
   build: []
   assets: []
   sync: []
-
-purge:
-  files:
-    - migrations/*

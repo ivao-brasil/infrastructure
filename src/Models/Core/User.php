@@ -89,8 +89,13 @@ class User extends Authenticatable
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn (?mixed $value, array $attributes) => "{$attributes['firstName']} {$attributes['lastName']}",
+            get: fn (mixed $value, array $attributes) => "{$attributes['firstName']} {$attributes['lastName']}",
         );
+    }
+
+    public function isStaff(): bool
+    {
+        return !empty($this->staff);
     }
 
     /**

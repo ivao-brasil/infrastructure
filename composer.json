@@ -24,7 +24,9 @@
     },
     "autoload": {
         "psr-4": {
-            "IvaoBrasil\\Infrastructure\\": "src/"
+            "IvaoBrasil\\Infrastructure\\": "src/",
+            "IvaoBrasil\\Infrastructure\\Database\\Factories\\": "database/factories/",
+            "IvaoBrasil\\Infrastructure\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
@@ -45,11 +47,9 @@
     "scripts": {
         "test": "php vendor/bin/phpunit",
         "post-install-cmd": [
-            "@clear",
             "@prepare"
         ],
         "post-update-cmd": [
-            "@clear",
             "@prepare"
         ],
         "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",

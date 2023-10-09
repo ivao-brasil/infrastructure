@@ -70,7 +70,7 @@ class Exam extends Model
     protected function canArchive(): Attribute
     {
         return Attribute::make(
-            get: function (bool $value, array $attributes) {
+            get: function (mixed $value, array $attributes) {
                 if ($value) {
                     return $value;
                 }

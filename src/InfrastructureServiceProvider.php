@@ -5,6 +5,7 @@ namespace IvaoBrasil\Infrastructure;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
@@ -87,6 +88,12 @@ class InfrastructureServiceProvider extends PackageServiceProvider
                 Arr::pluck(config('ivao-infrastructure.auth.super_admin_roles', []), 'value')
             );
         });
+
+        /** @var Router $router */
+        $router = $this->app->make(Router::class);
+        $router->aliasMiddleware('role', \Spatie\Permission\Middlewares\RoleMiddleware::class);
+        $router->aliasMiddleware('permission', \Spatie\Permission\Middlewares\PermissionMiddleware::class);
+        $router->aliasMiddleware('role_or_permission', \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class);
     }
 
     private function getMigrationNames(): array

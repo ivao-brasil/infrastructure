@@ -44,6 +44,9 @@ use IvaoBrasil\Infrastructure\Models\Core\User;
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereTag($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
+ * @property-read DivisionAward|null $atcAward
+ * @property-read User|null $createdBy
+ * @property-read DivisionAward|null $pilotAward
  * @mixin \Eloquent
  */
 class Event extends Model

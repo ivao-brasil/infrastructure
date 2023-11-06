@@ -3,16 +3,20 @@
 namespace IvaoBrasil\Infrastructure;
 
 use Illuminate\Auth\Events\Login;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use IvaoBrasil\Infrastructure\Console\BuildModuleResources;
+use IvaoBrasil\Infrastructure\Console\WatchModuleResources;
 use IvaoBrasil\Infrastructure\Services\Auth\IvaoLegacyProvider;
 use IvaoBrasil\Infrastructure\Services\Auth\IvaoOauthProvider;
 use IvaoBrasil\Infrastructure\Services\Auth\LegacyHttpClient;
 use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
+use IvaoBrasil\Infrastructure\Exceptions\Handler;
 use IvaoBrasil\Infrastructure\Listeners\Auth\LoginListener;
 use IvaoBrasil\Infrastructure\Models\Core\User;
 use IvaoBrasil\Infrastructure\Services\Auth\RoleRegistrarService;
@@ -37,7 +41,11 @@ class InfrastructureServiceProvider extends PackageServiceProvider
         $package->name('ivao-infrastructure')
             ->hasMigrations($this->getMigrationNames())
             ->runsMigrations()
-            ->hasConfigFile();
+            ->hasConfigFile()
+            ->hasCommands([
+                BuildModuleResources::class,
+                WatchModuleResources::class
+            ]);
     }
 
     public function registeringPackage()
@@ -50,7 +58,16 @@ class InfrastructureServiceProvider extends PackageServiceProvider
             ->needs('$roleMapping')
             ->giveConfig('ivao-infrastructure.auth.role_mapping');
 
+        $this->app->singleton(ExceptionHandler::class, Handler::class);
+
         Event::listen(Login::class, [LoginListener::class, 'handle']);
+    }
+
+    public function bootingPackage()
+    {
+        $this->publishes([
+            $this->package->basePath('/../resources/views/errors') => base_path("resources/views/errors"),
+        ], "{$this->packageView($this->package->viewNamespace)}-views");
     }
 
     public function packageBooted()

@@ -2,6 +2,7 @@ providers:
    - IvaoBrasil\Infrastructure\InfrastructureServiceProvider
    - Laravel\Socialite\SocialiteServiceProvider
    - Spatie\Permission\PermissionServiceProvider
+   - Nwidart\Modules\LaravelModulesServiceProvider
 
 migrations:
   - workbench/database/migrations

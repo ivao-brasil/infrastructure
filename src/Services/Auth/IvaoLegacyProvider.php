@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use IvaoBrasil\Infrastructure\Auth\Exception\InvalidUserDataException;
+use IvaoBrasil\Infrastructure\Exceptions\InvalidUserDataException;
 use Laravel\Socialite\Contracts\Provider as ProviderContract;
 use Laravel\Socialite\One\User;
 
@@ -29,8 +29,8 @@ class IvaoLegacyProvider implements ProviderContract
     public function redirect(): RedirectResponse
     {
         $redirectUrl = Str::startsWith($this->redirectUrl, '/')
-                    ? App::make('url')->to($this->redirectUrl)
-                    : $this->redirectUrl;
+            ? App::make('url')->to($this->redirectUrl)
+            : $this->redirectUrl;
 
         return new RedirectResponse($this->loginUrl . '?url=' . $redirectUrl);
     }

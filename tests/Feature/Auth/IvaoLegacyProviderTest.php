@@ -1,11 +1,12 @@
 <?php
+
 namespace IvaoBrasil\Infrastructure\Tests\Unit\Auth;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use IvaoBrasil\Infrastructure\Auth\Exception\InvalidUserDataException;
-use IvaoBrasil\Infrastructure\Auth\Services\IvaoLegacyProvider;
-use IvaoBrasil\Infrastructure\Auth\Services\LegacyHttpClient;
+use IvaoBrasil\Infrastructure\Exceptions\InvalidUserDataException;
+use IvaoBrasil\Infrastructure\Services\Auth\IvaoLegacyProvider;
+use IvaoBrasil\Infrastructure\Services\Auth\LegacyHttpClient;
 use Orchestra\Testbench\TestCase;
 
 class IvaoLegacyProviderTest extends TestCase

@@ -1,9 +1,10 @@
 <?php
+
 namespace IvaoBrasil\Infrastructure\Tests\Unit\Auth;
 
 use GuzzleHttp\ClientInterface;
-use IvaoBrasil\Infrastructure\Auth\Exception\DomainNotAllowedException;
-use IvaoBrasil\Infrastructure\Auth\Services\LegacyHttpClient;
+use IvaoBrasil\Infrastructure\Exceptions\DomainNotAllowedException;
+use IvaoBrasil\Infrastructure\Services\Auth\LegacyHttpClient;
 use PHPUnit\Framework\TestCase;
 
 class LegacyHttpClientTest extends TestCase
@@ -24,5 +25,4 @@ class LegacyHttpClientTest extends TestCase
         $this->expectExceptionMessage('The domain http://test.com is not allowed to use the Login API! Contact the System Administrator');
         $this->httpClient->getUserFromToken($invalidDomainToken, 'http://test.com');
     }
-
 }

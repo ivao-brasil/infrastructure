@@ -5,6 +5,7 @@ namespace IvaoBrasil\Infrastructure;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
@@ -18,10 +19,7 @@ use IvaoBrasil\Infrastructure\Services\Auth\LegacyHttpClient;
 use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
 use IvaoBrasil\Infrastructure\Exceptions\Handler;
 use IvaoBrasil\Infrastructure\Listeners\Auth\LoginListener;
-use IvaoBrasil\Infrastructure\Models\Core\User;
 use IvaoBrasil\Infrastructure\Services\Auth\RoleRegistrarService;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -39,8 +37,6 @@ class InfrastructureServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package->name('ivao-infrastructure')
-            ->hasMigrations($this->getMigrationNames())
-            ->runsMigrations()
             ->hasConfigFile()
             ->hasCommands([
                 BuildModuleResources::class,
@@ -111,25 +107,5 @@ class InfrastructureServiceProvider extends PackageServiceProvider
         $router->aliasMiddleware('role', \Spatie\Permission\Middlewares\RoleMiddleware::class);
         $router->aliasMiddleware('permission', \Spatie\Permission\Middlewares\PermissionMiddleware::class);
         $router->aliasMiddleware('role_or_permission', \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class);
-    }
-
-    private function getMigrationNames(): array
-    {
-        $migrationsDir = __DIR__ . '/../database/migrations/';
-        $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($migrationsDir)
-        );
-
-        $migrations = [];
-        foreach ($files as $file) {
-            /** @var \SplFileInfo $file */
-            if ($file->isDir()) {
-                continue;
-            }
-
-            $migrations[] = str_replace('.php', '',  str_replace($migrationsDir, '', $file->getPathname()));
-        }
-
-        return $migrations;
     }
 }

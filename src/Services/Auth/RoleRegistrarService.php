@@ -2,11 +2,12 @@
 
 namespace IvaoBrasil\Infrastructure\Services\Auth;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
+use IvaoBrasil\Infrastructure\Contracts\Auth\UserRolesInterface;
 use IvaoBrasil\Infrastructure\Data\Auth\UserRoles;
-use IvaoBrasil\Infrastructure\Models\Core\User;
 use UnitEnum;
 
 class RoleRegistrarService implements RoleRegistrarInterface
@@ -15,21 +16,24 @@ class RoleRegistrarService implements RoleRegistrarInterface
     {
     }
 
-    public function assignRoles(User $user): void
+    public function assignRoles(UserRolesInterface $user): void
     {
         $user->assignRole($this->getRolesToAssign($user)->pluck('value'));
-        $user->save();
+
+        if ($user instanceof Model) {
+            $user->save();
+        }
     }
 
     /**
-     * @param User $user
+     * @param UserRolesInterface $user
      * @return Collection<int, UnitEnum>
      */
-    private function getRolesToAssign(User $user): Collection
+    private function getRolesToAssign(UserRolesInterface $user): Collection
     {
         $rolesToAssign = collect();
 
-        if ($user->division !== $this->divisionCode || !$user->isStaff()) {
+        if ($user->division !== $this->divisionCode) {
             return $rolesToAssign;
         }
 

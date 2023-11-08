@@ -78,7 +78,7 @@ class InfrastructureServiceProvider extends PackageServiceProvider
         $socialite->extend(
             'ivao-oauth',
             function () use ($socialite) {
-                $config = config('ivao-infrastructure.auth.oauth');
+                $config = config('services.ivao-oauth');
                 return $socialite->buildProvider(
                     IvaoOauthProvider::class,
                     $config
@@ -89,7 +89,7 @@ class InfrastructureServiceProvider extends PackageServiceProvider
         $socialite->extend(
             'ivao-legacy',
             function (Application $app) {
-                $config = config('ivao-infrastructure.auth.legacy');
+                $config = config('services.ivao-legacy');
 
                 return new IvaoLegacyProvider(
                     $app->make(Request::class),

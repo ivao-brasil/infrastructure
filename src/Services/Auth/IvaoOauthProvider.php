@@ -10,6 +10,8 @@ use Laravel\Socialite\Two\User;
 
 class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
 {
+    private const OPENID_URL = 'https://api.ivao.aero/.well-known/openid-configuration';
+
     /**
      * @var string[]
      */
@@ -30,8 +32,7 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
     public function getOpenIdConfig(): array
     {
         if (!$this->openIdConfig) {
-            $openIdUrl = config('ivao-infrastructure.auth.oauth.openid_url');
-            $response = $this->getHttpClient()->get($openIdUrl);
+            $response = $this->getHttpClient()->get(self::OPENID_URL);
             $responseContents = $response->getBody()->getContents();
             $this->openIdConfig = json_decode($responseContents, true);
         }
@@ -98,12 +99,12 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
             'staff' => data_get($user, 'userStaffPositions.*.id'),
             'secondsAsPilot' => Arr::first(
                 $user['hours'],
-                fn(array $item) => $item['type'] === 'pilot',
+                fn (array $item) => $item['type'] === 'pilot',
                 default: ['hours' => 0]
             )['hours'],
             'secondsAsAtc' => Arr::first(
                 $user['hours'],
-                fn(array $item) => $item['type'] === 'atc',
+                fn (array $item) => $item['type'] === 'atc',
                 default: ['hours' => 0]
             )['hours'],
         ]);

@@ -2,6 +2,7 @@
 
 namespace IvaoBrasil\Infrastructure;
 
+use Composer\InstalledVersions;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Foundation\Application;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Composer;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use IvaoBrasil\Infrastructure\Console\BuildModuleResources;
@@ -37,11 +39,14 @@ class InfrastructureServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package->name('ivao-infrastructure')
-            ->hasConfigFile()
-            ->hasCommands([
+            ->hasConfigFile();
+
+        if (InstalledVersions::isInstalled('nwidart/laravel-modules')) {
+            $package->hasCommands([
                 BuildModuleResources::class,
                 WatchModuleResources::class
             ]);
+        }
     }
 
     public function registeringPackage()

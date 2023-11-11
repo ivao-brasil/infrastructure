@@ -2,11 +2,22 @@
 
 namespace IvaoBrasil\Infrastructure\Contracts\Auth;
 
-use Illuminate\Support\Collection;
-use Spatie\Permission\Contracts\Role;
-
 interface UserRolesInterface
 {
-    public function assignRole(array|string|int|Role|Collection ...$roles): void;
-    public function hasAnyRole(string|int|array|Role|Collection ...$roles): void;
+    /**
+     * Assign the given role to the model.
+     *
+     * @param  array|string|int|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection  ...$roles
+     * @return $this
+     */
+    public function assignRole(...$roles);
+
+    /**
+     * Determine if the model has any of the given role(s).
+     *
+     * Alias to hasRole() but without Guard controls
+     *
+     * @param  string|int|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection  $roles
+     */
+    public function hasAnyRole(...$roles);
 }

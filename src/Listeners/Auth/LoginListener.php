@@ -24,14 +24,19 @@ class LoginListener
      */
     public function handle(Login $event): void
     {
-        if (!config('ivao-infrastructure.auth.enable_roles', false)) {
+        if (
+            !method_exists($event->user, 'assignRoles') ||
+            !property_exists($event->user, 'division') ||
+            !property_exists($event->user, 'staff')
+        ) {
             return;
         }
 
-        if (!($event->user instanceof UserRolesInterface)) {
-            throw new InvalidArgumentException('User must implement UserRolesInterface.');
-        }
-
-        $this->roleRegistrar->assignRoles($event->user);
+        $event->user->assignRoles(
+            $this->roleRegistrar->getRolesToAssign(
+                $event->user->division,
+                $event->user->staff
+            )->pluck('value')
+        );
     }
 }

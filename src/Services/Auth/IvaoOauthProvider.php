@@ -86,7 +86,7 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
         $newUser = new User($user);
         $newUser->setRaw($user)->map([
             'id' => $user['id'],
-            'email' => $user['email'],
+            'email' => data_get($user, 'email'),
             'nickname' => $user['publicNickname'],
             'name' => $user['firstName'] . ' ' . $user['lastName'],
             'vid' => $user['id'],

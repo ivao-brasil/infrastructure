@@ -18,7 +18,7 @@ class IvaoOauthProviderTest extends TestCase
 {
     use WithWorkbench;
 
-    private const GUZZLE_HANDLER_CONFIG = 'ivao-infrastructure.auth.oauth.guzzle.handler';
+    private const GUZZLE_HANDLER_CONFIG = 'services.ivao-oauth.guzzle.handler';
     private string $openIdConfig = '';
     private string $oauthResponse = '';
 
@@ -118,11 +118,10 @@ class IvaoOauthProviderTest extends TestCase
     private function defineBaseEnvironment(Application $app)
     {
         tap($app['config'], function (Repository $config) {
-            $config->set('ivao-infrastructure.auth.oauth', [
+            $config->set('services.ivao-oauth', [
                 'client_id' => '123',
                 'client_secret' => '123',
-                'redirect' => $this->getAuthUrl(),
-                'openid_url' => 'http://oauthtest.com'
+                'redirect' => $this->getAuthUrl()
             ]);
         });
     }

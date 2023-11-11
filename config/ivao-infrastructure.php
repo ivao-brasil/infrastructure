@@ -4,7 +4,6 @@ use IvaoBrasil\Infrastructure\Data\Auth\UserRoles;
 
 return [
     'auth' => [
-        'enable_roles' => false,
         'division_code' => 'BR',
         'super_admin_roles' => [
             UserRoles::WEB_COORDINATOR,

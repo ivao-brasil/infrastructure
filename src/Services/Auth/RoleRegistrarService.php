@@ -2,13 +2,10 @@
 
 namespace IvaoBrasil\Infrastructure\Services\Auth;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
-use IvaoBrasil\Infrastructure\Contracts\Auth\UserRolesInterface;
 use IvaoBrasil\Infrastructure\Data\Auth\UserRoles;
-use UnitEnum;
 
 class RoleRegistrarService implements RoleRegistrarInterface
 {
@@ -16,28 +13,22 @@ class RoleRegistrarService implements RoleRegistrarInterface
     {
     }
 
-    public function assignRoles(UserRolesInterface $user): void
-    {
-        $user->assignRole($this->getRolesToAssign($user)->pluck('value'));
-
-        if ($user instanceof Model) {
-            $user->save();
-        }
-    }
-
     /**
-     * @param UserRolesInterface $user
-     * @return Collection<int, UnitEnum>
+     * Get roles to assign
+     *
+     * @param string $division
+     * @param string[] $staffPositions
+     * @return Collection<int, UserRoles>
      */
-    private function getRolesToAssign(UserRolesInterface $user): Collection
+    public function getRolesToAssign(string $division, array $staffPositions): Collection
     {
         $rolesToAssign = collect();
 
-        if ($user->division !== $this->divisionCode) {
+        if ($division !== $this->divisionCode) {
             return $rolesToAssign;
         }
 
-        $userStaffRoles = collect($user->staff)
+        $userStaffRoles = collect($staffPositions)
             ->map(function (string $position) {
                 foreach ($this->getDivisionPositionRegex() as $role => $regex) {
                     if (!$this->hasStaffPositionByRegex($position, $regex)) {

@@ -8,8 +8,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
 use IvaoBrasil\Infrastructure\Data\Auth\UserRoles;
-use IvaoBrasil\Infrastructure\Models\Core\User;
 use IvaoBrasil\Infrastructure\Services\Auth\RoleRegistrarService;
+use IvaoBrasil\Infrastructure\Tests\Feature\Auth\Fixtures\TestUser;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
@@ -52,8 +52,14 @@ class RoleRegistrarServiceTest extends TestCase
             $config->set('auth.providers', [
                 'users' => [
                     'driver' => 'eloquent',
-                    'model' => User::class,
+                    'model' => TestUser::class,
                 ],
+            ]);
+
+            $config->set('services.ivao-oauth', [
+                'client_id' => 'ABC',
+                'client_secret' => '123',
+                'redirect' => '/auth/callback'
             ]);
         });
     }
@@ -68,14 +74,9 @@ class RoleRegistrarServiceTest extends TestCase
      */
     public function testAssignsRoleToUser(string $division, array $staff, array $expected)
     {
-        /** @var User */
-        $user = User::factory()->makeOne([
-            'division' => $division, 'staff' => $staff
-        ]);
+        $result = $this->roleRegistrar->getRolesToAssign($division, $staff);
 
-        $this->roleRegistrar->assignRoles($user);
-
-        $this->assertSame(Arr::pluck($expected, 'value'), $user->getRoleNames()->toArray());
+        $this->assertSame($expected, $result->toArray());
     }
 
     public function assignsRoleToUserProvider()

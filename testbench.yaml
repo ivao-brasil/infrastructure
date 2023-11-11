@@ -3,9 +3,6 @@ providers:
    - Laravel\Socialite\SocialiteServiceProvider
    - Spatie\Permission\PermissionServiceProvider
 
-migrations:
-  - workbench/database/migrations
-
 seeders: []
 
 workbench:

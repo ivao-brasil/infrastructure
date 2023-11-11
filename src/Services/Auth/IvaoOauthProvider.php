@@ -17,8 +17,7 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
      */
     protected $scopes = [
         'openid',
-        'profile',
-        'configuration',
+        'profile'
     ];
 
     /** @var string */
@@ -87,6 +86,7 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
         $newUser = new User($user);
         $newUser->setRaw($user)->map([
             'id' => $user['id'],
+            'email' => $user['email'],
             'nickname' => $user['publicNickname'],
             'name' => $user['firstName'] . ' ' . $user['lastName'],
             'vid' => $user['id'],

@@ -3,6 +3,7 @@
 namespace IvaoBrasil\Infrastructure\Services\Auth;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
@@ -27,6 +28,25 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
     protected $stateless = true;
 
     private ?array $openIdConfig = null;
+
+    /**
+     * Create a new provider instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $clientId
+     * @param  string  $clientSecret
+     * @param  string  $redirectUrl
+     * @param  array  $guzzle
+     * @return void
+     */
+    public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl, $guzzle = [])
+    {
+        $this->guzzle = $guzzle;
+        $this->request = $request;
+        $this->clientId = $clientId;
+        $this->redirectUrl = route($redirectUrl);
+        $this->clientSecret = $clientSecret;
+    }
 
     public function getOpenIdConfig(): array
     {

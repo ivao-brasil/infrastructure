@@ -11,6 +11,6 @@
         'client_id' => env('IVAO_OAUTH_CLIENT_ID'),
         'client_secret' => env('IVAO_OAUTH_CLIENT_SECRET'),
         'redirect' => 'ivao-oauth.callback', // Named route
-        'openid_url' => 'https://api.ivao.aero/.well-known/openid-configuration'
+        'openid_config_url' => 'https://api.ivao.aero/.well-known/openid-configuration'
     ],
 ```

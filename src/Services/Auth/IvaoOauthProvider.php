@@ -11,8 +11,6 @@ use Laravel\Socialite\Two\User;
 
 class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
 {
-    private const OPENID_URL = 'https://api.ivao.aero/.well-known/openid-configuration';
-
     /**
      * @var string[]
      */
@@ -51,7 +49,7 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
     public function getOpenIdConfig(): array
     {
         if (!$this->openIdConfig) {
-            $response = $this->getHttpClient()->get(self::OPENID_URL);
+            $response = $this->getHttpClient()->get(config('services.ivao-oauth.openid_config_url'));
             $responseContents = $response->getBody()->getContents();
             $this->openIdConfig = json_decode($responseContents, true);
         }

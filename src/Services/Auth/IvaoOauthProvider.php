@@ -112,16 +112,8 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
             'division' => $user['divisionId'],
             'country' => $user['countryId'],
             'staff' => data_get($user, 'userStaffPositions.*.id'),
-            'secondsAsPilot' => Arr::first(
-                $user['hours'],
-                fn (array $item) => $item['type'] === 'pilot',
-                default: ['hours' => 0]
-            )['hours'],
-            'secondsAsAtc' => Arr::first(
-                $user['hours'],
-                fn (array $item) => $item['type'] === 'atc',
-                default: ['hours' => 0]
-            )['hours'],
+            'secondsAsPilot' => data_get($user, 'hours.pilot', 0),
+            'secondsAsAtc' => data_get($user, 'hours.atc', 0),
         ]);
 
         return $newUser;

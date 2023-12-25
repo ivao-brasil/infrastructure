@@ -22,9 +22,6 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
     /** @var string */
     protected $scopeSeparator = ' ';
 
-    /** @var bool */
-    protected $stateless = true;
-
     private ?array $openIdConfig = null;
 
     /**

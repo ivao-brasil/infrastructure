@@ -7,10 +7,12 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Response as FacadesResponse;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User;
+use Orchestra\Testbench\Attributes\DefineEnvironment;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
@@ -22,9 +24,7 @@ class IvaoOauthProviderTest extends TestCase
     private string $openIdConfig = '';
     private string $oauthResponse = '';
 
-    /**
-     * @define-env usesMockedRedirect
-     */
+    #[DefineEnvironment('usesMockedRedirect')]
     public function testRedirectsAUser()
     {
         $response = $this->get($this->getAuthUrl() . '/redirect');
@@ -32,9 +32,7 @@ class IvaoOauthProviderTest extends TestCase
         $response->assertRedirectContains('https://sso.ivao.aero/authorize');
     }
 
-    /**
-     * @define-env usesMockedTokenAndUser
-     */
+    #[DefineEnvironment('usesMockedTokenAndUser')]
     public function testAuthenticateTheUserInCallbackAction()
     {
         $response = $this->get($this->getAuthUrl()  . '/callback');
@@ -45,20 +43,24 @@ class IvaoOauthProviderTest extends TestCase
     /**
      * Define routes setup.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param  Router  $router
      * @return void
      */
-    protected function defineRoutes($router)
+    protected function defineRoutes($router): void
     {
-        $router->prefix('auth/provider/ivao-oauth')
-            ->middleware(['web'])
+        $router->middleware(['web'])
+            ->prefix('auth/provider/ivao-oauth')
             ->group(function () {
                 Route::get('/redirect', function () {
-                    return Socialite::driver('ivao-oauth')->redirect();
+                    return Socialite::driver('ivao-oauth')
+                        ->stateless()
+                        ->redirect();
                 });
                 Route::get('/callback', function () {
-                    /** @var User */
-                    $user = Socialite::driver('ivao-oauth')->user();
+                    /** @var User $user */
+                    $user = Socialite::driver('ivao-oauth')
+                        ->stateless()
+                        ->user();
                     return FacadesResponse::json($user->getRaw());
                 });
             });
@@ -67,10 +69,10 @@ class IvaoOauthProviderTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param Application $app
      * @return void
      */
-    protected function usesMockedRedirect(Application $app)
+    protected function usesMockedRedirect(Application $app): void
     {
         $this->defineBaseEnvironment($app);
 
@@ -89,10 +91,10 @@ class IvaoOauthProviderTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param Application $app
      * @return void
      */
-    protected function usesMockedTokenAndUser(Application $app)
+    protected function usesMockedTokenAndUser(Application $app): void
     {
         $this->defineBaseEnvironment($app);
 
@@ -112,16 +114,17 @@ class IvaoOauthProviderTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param Application $app
      * @return void
      */
-    private function defineBaseEnvironment(Application $app)
+    private function defineBaseEnvironment(Application $app): void
     {
         tap($app['config'], function (Repository $config) {
             $config->set('services.ivao-oauth', [
                 'client_id' => '123',
                 'client_secret' => '123',
-                'redirect' => $this->getAuthUrl()
+                'redirect' => $this->getAuthUrl(),
+                'openid_config_url' => 'http://localhost'
             ]);
         });
     }

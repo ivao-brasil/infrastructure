@@ -8,15 +8,16 @@ use IvaoBrasil\Infrastructure\Exceptions\InvalidUserDataException;
 use Laravel\Socialite\Contracts\Provider as ProviderContract;
 use Laravel\Socialite\One\User;
 
-class IvaoLegacyProvider implements ProviderContract
+readonly class IvaoLegacyProvider implements ProviderContract
 {
     public function __construct(
-        private Request $request,
+        private Request          $request,
         private LegacyHttpClient $httpClient,
-        private string $redirectUrl,
-        private string $loginUrl,
-        private string $apiUrl
-    ) {
+        private string           $redirectUrl,
+        private string           $loginUrl,
+        private string           $apiUrl
+    )
+    {
     }
 
     /**
@@ -26,7 +27,7 @@ class IvaoLegacyProvider implements ProviderContract
      */
     public function redirect(): RedirectResponse
     {
-        $redirectUrl = route($this->redirectUrl);
+        $redirectUrl = $this->redirectUrl;
 
         return new RedirectResponse($this->loginUrl . '?url=' . $redirectUrl);
     }

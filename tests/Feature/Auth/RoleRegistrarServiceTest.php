@@ -3,13 +3,11 @@
 namespace IvaoBrasil\Infrastructure\Tests\Feature\Auth;
 
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
 use IvaoBrasil\Infrastructure\Data\Auth\UserRoles;
 use IvaoBrasil\Infrastructure\Services\Auth\RoleRegistrarService;
-use IvaoBrasil\Infrastructure\Tests\Feature\Auth\Fixtures\TestUser;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
@@ -17,6 +15,8 @@ class RoleRegistrarServiceTest extends TestCase
 {
     use RefreshDatabase;
     use WithWorkbench;
+
+    const DIVISION_CODE = 'BR';
 
     private RoleRegistrarService $roleRegistrar;
 
@@ -34,27 +34,13 @@ class RoleRegistrarServiceTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
-    protected function defineEnvironment($app)
+    protected function defineEnvironment($app): void
     {
-        // Setup default database to use sqlite :memory:
         tap($app['config'], function (Repository $config) {
-            $config->set('ivao-infrastructure.auth.division_code', 'BR');
-            $config->set('auth.guards', [
-                'web' => [
-                    'driver' => 'session',
-                    'provider' => 'users',
-                ]
-            ]);
-
-            $config->set('auth.providers', [
-                'users' => [
-                    'driver' => 'eloquent',
-                    'model' => TestUser::class,
-                ],
-            ]);
+            $config->set('ivao-infrastructure.division_code', self::DIVISION_CODE);
 
             $config->set('services.ivao-oauth', [
                 'client_id' => 'ABC',
@@ -67,7 +53,7 @@ class RoleRegistrarServiceTest extends TestCase
     /**
      * @param string $division
      * @param array $staff
-     * @param Collection $expected
+     * @param array $expected
      * @return void
      *
      * @dataProvider assignsRoleToUserProvider
@@ -79,7 +65,7 @@ class RoleRegistrarServiceTest extends TestCase
         $this->assertSame($expected, $result->toArray());
     }
 
-    public function assignsRoleToUserProvider()
+    public function assignsRoleToUserProvider(): array
     {
         return [
             'User is not a Staff member' => [

@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use IvaoBrasil\Infrastructure\Contracts\Auth\RoleRegistrarInterface;
 use IvaoBrasil\Infrastructure\Data\Auth\UserRoles;
 
-class RoleRegistrarService implements RoleRegistrarInterface
+readonly class RoleRegistrarService implements RoleRegistrarInterface
 {
     public function __construct(private string $divisionCode, private array $roleMapping)
     {

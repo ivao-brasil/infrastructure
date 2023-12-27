@@ -25,25 +25,9 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
     private ?array $openIdConfig = null;
 
     /**
-     * Create a new provider instance.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $clientId
-     * @param  string  $clientSecret
-     * @param  string  $redirectUrl
-     * @param  array  $guzzle
-     * @return void
+     * @throws GuzzleException
      */
-    public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl, $guzzle = [])
-    {
-        $this->guzzle = $guzzle;
-        $this->request = $request;
-        $this->clientId = $clientId;
-        $this->redirectUrl = route($redirectUrl);
-        $this->clientSecret = $clientSecret;
-    }
-
-    public function getOpenIdConfig(): array
+    public function openIdConfig(string $key): string
     {
         if (!$this->openIdConfig) {
             $response = $this->getHttpClient()->get(config('services.ivao-oauth.openid_config_url'));
@@ -51,39 +35,41 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
             $this->openIdConfig = json_decode($responseContents, true);
         }
 
-        return $this->openIdConfig;
+        return $this->openIdConfig[$key];
     }
 
     /**
-     *  @param  string $state
+     * @param string $state
      *
-     *  @return string
+     * @return string
+     * @throws GuzzleException
      */
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
-        $authEndpoint = $this->getOpenIdConfig()['authorization_endpoint'];
+        $authEndpoint = $this->openIdConfig('authorization_endpoint');
 
         return $this->buildAuthUrlFromBase($authEndpoint, $state);
     }
 
     /**
-     *  @return  string
+     * @return  string
+     * @throws GuzzleException
      */
-    protected function getTokenUrl()
+    protected function getTokenUrl(): string
     {
-        return $this->getOpenIdConfig()['token_endpoint'];
+        return $this->openIdConfig('token_endpoint');
     }
 
     /**
-     *  @param  string $token
+     * @param string $token
      *
-     *  @throws  GuzzleException
+     * @return  array|mixed
+     * @throws  GuzzleException
      *
-     *  @return  array|mixed
      */
-    protected function getUserByToken($token)
+    protected function getUserByToken($token): mixed
     {
-        $userInfoEndpoint = $this->getOpenIdConfig()['userinfo_endpoint'];
+        $userInfoEndpoint = $this->openIdConfig('userinfo_endpoint');
 
         $response = $this->getHttpClient()->get($userInfoEndpoint, [
             'headers' => [
@@ -98,7 +84,7 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
 
     protected function mapUserToObject(array $user): User
     {
-        $newUser = new User($user);
+        $newUser = new User();
         $newUser->setRaw($user)->map([
             'id' => $user['id'],
             'email' => data_get($user, 'email'),
@@ -117,22 +103,5 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
         ]);
 
         return $newUser;
-    }
-
-    /**
-     * Get the POST fields for the token request.
-     *
-     * @param  string  $code
-     * @return array
-     */
-    protected function getTokenFields($code)
-    {
-        return [
-            'client_id' => $this->clientId,
-            'client_secret' => $this->clientSecret,
-            'code' => $code,
-            'redirect_uri' => $this->redirectUrl,
-            'grant_type' => 'authorization_code',
-        ];
     }
 }

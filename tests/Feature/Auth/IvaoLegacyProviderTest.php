@@ -1,6 +1,6 @@
 <?php
 
-namespace IvaoBrasil\Infrastructure\Tests\Unit\Auth;
+namespace IvaoBrasil\Infrastructure\Tests\Feature\Auth;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;

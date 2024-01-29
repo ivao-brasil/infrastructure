@@ -6,8 +6,8 @@
     "divisionId": "BR",
     "isStaff": true,
     "languageId": "pt",
-    "firstName": "Joelson",
-    "lastName": "Santana",
+    "firstName": "Jonh",
+    "lastName": "Doe",
     "rating": {
         "isPilot": true,
         "isAtc": true,
@@ -47,5 +47,5 @@
             "description": null
         }
     ],
-    "publicNickname": "Joelson (444590)"
+    "publicNickname": "Jonh (444590)"
 }

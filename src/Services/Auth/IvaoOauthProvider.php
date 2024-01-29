@@ -5,6 +5,7 @@ namespace IvaoBrasil\Infrastructure\Services\Auth;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
@@ -22,20 +23,21 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
     /** @var string */
     protected $scopeSeparator = ' ';
 
-    private ?array $openIdConfig = null;
+    private const OPENID_CACHE_KEY = 'ivao-oauth-openid';
+    private const OPENID_CACHE_TTL = 180;
 
     /**
      * @throws GuzzleException
      */
     public function openIdConfig(string $key): string
     {
-        if (!$this->openIdConfig) {
+        $config = Cache::remember(self::OPENID_CACHE_KEY, self::OPENID_CACHE_TTL, function() {
             $response = $this->getHttpClient()->get(config('services.ivao-oauth.openid_config_url'));
             $responseContents = $response->getBody()->getContents();
-            $this->openIdConfig = json_decode($responseContents, true);
-        }
+            return json_decode($responseContents, true);
+        });
 
-        return $this->openIdConfig[$key];
+        return $config[$key];
     }
 
     /**
@@ -85,6 +87,12 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user): User
     {
         $newUser = new User();
+        [
+            'pilot' => $pilotTime, 
+            'atc' => $atcTime, 
+            'staff' => $staffTime
+        ] = $this->getOnlineTime($user);
+
         $newUser->setRaw($user)->map([
             'id' => $user['id'],
             'email' => data_get($user, 'email'),
@@ -98,10 +106,25 @@ class IvaoOauthProvider extends AbstractProvider implements ProviderInterface
             'division' => $user['divisionId'],
             'country' => $user['countryId'],
             'staff' => data_get($user, 'userStaffPositions.*.id'),
-            'secondsAsPilot' => data_get($user, 'hours.pilot', 0),
-            'secondsAsAtc' => data_get($user, 'hours.atc', 0),
+            'secondsAsPilot' => $pilotTime,
+            'secondsAsAtc' => $atcTime,
+            'secondsAsStaff' => $staffTime,
         ]);
 
         return $newUser;
+    }
+
+    private function getOnlineTime(array $user): array
+    {
+        $hoursData = collect(data_get($user, 'hours', []));
+        $hourTypes = ['pilot', 'atc', 'staff'];
+        $result = [];
+
+        foreach ($hourTypes as $type) {
+            $hourData = $hoursData->first(fn (array $hourItem) => $hourItem['type'] === $type, []);
+            $result[$type] = data_get($hourData, 'hours', 0);
+        }
+        
+        return $result;
     }
 }

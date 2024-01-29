@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Response as FacadesResponse;
+use Illuminate\Support\Facades\Response as ResponseFacade;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User;
@@ -35,9 +35,29 @@ class IvaoOauthProviderTest extends TestCase
     #[DefineEnvironment('usesMockedTokenAndUser')]
     public function testAuthenticateTheUserInCallbackAction()
     {
+        $expectedRawData = json_decode($this->getOauthResponse(), true);
+        $expectedAttributesData = [
+            'id' => 444590,
+            'email' => null,
+            'nickname' => 'Jonh (444590)',
+            'name' => 'Jonh Doe',
+            'vid' => 444590,
+            'firstName' => 'Jonh',
+            'lastName' => 'Doe',
+            'atcRating' => 7,
+            'pilotRating' => 7,
+            'division' => 'BR',
+            'country' => 'BR',
+            'staff' => ['BR-AWM'],
+            'secondsAsPilot' => 2330527,
+            'secondsAsAtc' => 1488285,
+            'secondsAsStaff' => 180777,
+        ];
+
         $response = $this->get($this->getAuthUrl()  . '/callback');
 
-        $response->assertJson(json_decode($this->getOauthResponse(), true));
+        $this->assertSame($response['raw'], $expectedRawData);
+        $this->assertSame($response['attributes'], $expectedAttributesData);
     }
 
     /**
@@ -61,7 +81,11 @@ class IvaoOauthProviderTest extends TestCase
                     $user = Socialite::driver('ivao-oauth')
                         ->stateless()
                         ->user();
-                    return FacadesResponse::json($user->getRaw());
+                        
+                    return ResponseFacade::json([
+                        'raw' => $user->getRaw(),
+                        'attributes' => $user->attributes
+                    ]);
                 });
             });
     }
